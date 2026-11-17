@@ -1,8 +1,6 @@
 import { Image } from 'expo-image';
 import { StyleSheet, View } from 'react-native';
-import Animated, { Keyframe, Easing } from 'react-native-reanimated';
 
-import classes from './animated-icon.module.css';
 const DURATION = 300;
 
 export function AnimatedSplashOverlay() {
@@ -33,9 +31,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
-    borderWidth: 7,
+    borderWidth: 10,
     borderRadius: 130,
-    borderColor: 'white',
+    borderColor: 'black',
 
   },
   petImage: {
