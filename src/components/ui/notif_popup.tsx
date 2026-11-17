@@ -85,7 +85,6 @@ export function Notif({ setClose, onAction }: PressProps) {
 
           {/* NOTIFICATIONS LIST */}
           <ScrollView
-            style={styles.notifsList}
             contentContainerStyle={styles.notifsContent}
           >
 
@@ -234,11 +233,15 @@ const styles = StyleSheet.create({
     width: '25%',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#92D80F'
   },
 
   notifIcon: {
     width: 65,
     height: 65,
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 5,
   },
 
   // RIGHT INFORMATION
@@ -273,7 +276,7 @@ const styles = StyleSheet.create({
 
   actionButton: {
     backgroundColor: '#92D80F',
-    borderWidth: 2,
+    borderWidth: 4,
     borderColor: 'black',
     borderRadius: 20,
     paddingVertical: 5,

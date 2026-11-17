@@ -114,8 +114,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     height: '100%',
-    borderColor: 'white',
-    borderWidth: 2,
   },
 
   itemBox: {
@@ -127,9 +125,12 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: '20%',
-    height: '100%',
+    width: '30%',
+    height: '80%',
     backgroundColor: '#92D80F',
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 5,
   },
 
   notifTest: {

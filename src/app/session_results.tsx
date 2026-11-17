@@ -5,12 +5,45 @@ import { PetBubble } from '@/components/pet-bubble';
 import { ThemedView } from '@/components/themed-view';
 import { WebBadge } from '@/components/web-badge';
 
+import { addExperienceToUser, getUserById } from '@/data/users';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
-import { useRouter } from 'expo-router';
+
 
 export default function SessionResults() {
   const router = useRouter();
 
+  // Receive experience from previous screen
+  const { experience } = useLocalSearchParams();
+
+  const experienceGained = Number(experience) || 0;
+  const handleReturnHome = () => {
+    // Get current experience before updating
+    const user = getUserById('user001');
+
+    const oldExperience = user?.experience ?? 0;
+
+    // Update actual user data
+    const updatedUser = addExperienceToUser(
+      'user001',
+      experienceGained
+    );
+
+    if (!updatedUser) return;
+
+    const newExperience = updatedUser.experience;
+
+    // Navigate home, passing old and new experience
+    router.replace({
+      pathname: '/(tabs)',
+      params: {
+        xpFrom: String(oldExperience),
+        xpTo: String(newExperience),
+        xpAnimationId: String(Date.now()),
+      },
+    });
+  };
+  
   return (
     <ThemedView style={styles.container}>
 
@@ -36,9 +69,14 @@ export default function SessionResults() {
         {/* Bonus box */}
         <View style={styles.bonusesSection}>
         </View>
+
+        <View style={styles.experienceSection}>
+          <Text style={styles.experienceText}>Experience Gained</Text>
+          <Text style={styles.experienceGained}>{experienceGained}</Text>
+        </View>
         
-        {/* Play / Pause Section */}
-        <View style={styles.playSection}>
+        {/* Graphics Section */}
+        <View style={styles.iconsSection}>
 
           <Image
           source={require('@/assets/images/battery_2.png')}
@@ -58,7 +96,7 @@ export default function SessionResults() {
           resizeMode="contain"
           />
 
-          <Pressable onPress={() => router.replace('/(tabs)')}>
+          <Pressable onPress={handleReturnHome}>
             <Image
               source={require('@/assets/images/back_home_icon.png')}
               style={{
@@ -128,7 +166,7 @@ const styles = StyleSheet.create({
 
   // INFO BOXES
   bonusesSection: {
-    flex: 1,
+    flex: 0.7,
     width: '90%',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -144,17 +182,34 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: 'white'
   },
+  experienceSection: {
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderStyle: 'solid',
+    borderWidth: 5,
+    borderRadius: 30,
+    flex: 0.5,
+    width: '60%',
+    alignSelf: 'flex-end',
 
-  // BEGIN BUTTON
-  beginSection: {
-    flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 15,
+    marginRight: 10,
+
+    display: 'flex',
+    flexDirection: 'column'
   },
+    experienceText: {
+      fontWeight: 'bold',
+      fontSize: 20,
+      alignSelf: 'center'
+    },
+    experienceGained: {
+      fontWeight: 'bold',
+      fontSize: 30,
+      alignSelf: 'center'
+    },
+
   // Play / Pause / Stop buttons
-  playSection: {
+  iconsSection: {
     flex: 1,
     width: '100%',
     justifyContent: 'flex-start',

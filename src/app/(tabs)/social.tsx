@@ -23,11 +23,11 @@ export default function SocialScreen() {
           <ThemedView style={styles.tabHeaderContainer}>
             <Pressable style={[styles.tabHeader, !showGroupsTab && styles.selected]}
             onPress={() => setShowGroupsTab(true)}>
-              <Text style={{fontWeight: 'bold', fontSize: 30}}>Friends</Text>
+              <Text style={{fontWeight: 'bold', fontSize: 30}}>Groups</Text>
             </Pressable>
             <Pressable style={[styles.tabHeader, showGroupsTab && styles.selected]}
             onPress={() => setShowGroupsTab(false)}>
-              <Text style={{fontWeight: 'bold', fontSize: 30}}>Requests</Text>
+              <Text style={{fontWeight: 'bold', fontSize: 30}}>Activities</Text>
             </Pressable>
           </ThemedView>
             
@@ -71,9 +71,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '12%',
-    borderStyle: 'solid',
-    borderColor: 'red',
-    borderWidth: 5
   },
   heroSection: {
     alignItems: 'center',

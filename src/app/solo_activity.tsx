@@ -9,33 +9,73 @@ import { WebBadge } from '@/components/web-badge';
 import { useRouter } from 'expo-router';
 
 export default function SoloActivity() {
-  const [secondsLeft, setSecondsLeft] = useState(60);
-  const [isRunning, setIsRunning] = useState(true);
-
+  const [timer, setTimer] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
   const [sessionStarted, setSessionStarted] = useState(false);
-  const [sessionPaused, setSessionPaused] = useState(false);
+
+  // Exercise statistics
+  const [steps, setSteps] = useState(0);
+  const [distance, setDistance] = useState(0);
 
   const router = useRouter();
 
   useEffect(() => {
-    let interval = null;
+    let interval: ReturnType<typeof setInterval> | undefined;
 
-    if (isRunning && secondsLeft > 0) {
+    if (isRunning) {
       interval = setInterval(() => {
-        setSecondsLeft((prev) => prev - 1);
-      }, 1000);
-    } else if (secondsLeft === 0) {
-      setIsRunning(false);
+        setTimer((prev) => prev + 10);
+      }, 10);
     }
 
-    // Cleanup interval on unmount or pause
-    return () => clearInterval(interval);
-  }, [isRunning, secondsLeft]);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isRunning]);
 
+  const handlePetTap = () => {
+    if (!sessionStarted || !isRunning) return;
+
+    setSteps((prev) => prev + 10);
+
+    setDistance((prev) =>
+      Number((prev + 0.01).toFixed(2))
+    );
+  };
+
+  const formatTime = (milliseconds: number) => {
+    const minutes = Math.floor(milliseconds / 60000);
+    const seconds = Math.floor((milliseconds % 60000) / 1000);
+    const ms = Math.floor((milliseconds % 1000) / 10);
+
+    return (
+      `${String(minutes).padStart(2, '0')} : ` +
+      `${String(seconds).padStart(2, '0')} : ` +
+      `${String(ms).padStart(2, '0')}`
+    );
+  };
+
+  const handleStartSession = () => {
+    console.log('start session');
+
+    setTimer(0);
+    setSteps(0);
+    setDistance(0);
+
+    setSessionStarted(true);
+    setIsRunning(true);
+  };
   const handleStopSession = () => {
-    console.log("end session")
-    router.push('/session_results');
-  }
+    console.log("ending session")
+    const experienceGained = (steps / 100) + (distance * 40);
+
+    router.push({
+      pathname: '/session_results',
+      params: {
+        experience: experienceGained.toString(),
+      },
+    });
+  };
 
   return (
     <ThemedView style={styles.container}>
@@ -45,12 +85,19 @@ export default function SoloActivity() {
 
         {/* Timer */}
         <ThemedView style={styles.timerSection}>
-          <Text style={styles.timerText}>{secondsLeft}</Text>
+          <Text style={styles.timerText}>
+            {formatTime(timer)}
+          </Text>
         </ThemedView>
 
         {/* Pet */}
         <ThemedView style={styles.petBubbleSection}>
-          <PetBubble />
+          <Pressable
+            onPress={handlePetTap}
+            style={styles.petBubblePressable}
+          >
+            <PetBubble />
+          </Pressable>
         </ThemedView>
 
       </ThemedView>
@@ -65,8 +112,26 @@ export default function SoloActivity() {
 
         {/* Info boxes */}
         <View style={styles.infoSection}>
-          <View style={styles.infoBox} />
-          <View style={styles.infoBox} />
+          <View style={styles.infoBox}>
+            <Image
+            source={require('@/assets/images/steps.png')}
+            style={{
+              width: 60,
+              height: 60,
+            }}
+            resizeMode="contain"
+            />
+          </View>
+          <View style={styles.infoBox}>
+            <Image
+            source={require('@/assets/images/distance.png')}
+            style={{
+              width: 60,
+              height: 60,
+            }}
+            resizeMode="contain"
+            />
+          </View>
           <View style={styles.infoBox} />
           <View style={styles.infoBox} />
         </View>
@@ -74,7 +139,7 @@ export default function SoloActivity() {
         <View style={styles.beginSection}>
           <Pressable
             style={styles.beginButton}
-            onPress={() => setSessionStarted(true)}
+            onPress={handleStartSession}
           >
             <Text style={styles.beginText}>BEGIN</Text>
           </Pressable>
@@ -87,15 +152,42 @@ export default function SoloActivity() {
 
         {/* Info boxes */}
         <View style={styles.infoSection}>
-          <View style={styles.infoBox} />
-          <View style={styles.infoBox} />
+          <View style={styles.infoBox}>
+            <Image
+              source={require('@/assets/images/steps.png')}
+              style={{
+                width: 60,
+                height: 60,
+              }}
+              resizeMode="contain"
+            />
+
+            <Text style={styles.infoText}>
+              {steps}
+            </Text>
+          </View>
+
+          <View style={styles.infoBox}>
+            <Image
+              source={require('@/assets/images/distance.png')}
+              style={{
+                width: 60,
+                height: 60,
+              }}
+              resizeMode="contain"
+            />
+
+            <Text style={styles.infoText}>
+              {distance.toFixed(2)} km
+            </Text>
+          </View>
           <View style={styles.infoBox} />
           <View style={styles.infoBox} />
         </View>
         
         {/* Play / Pause Section */}
         <View style={styles.playSection}>
-          {!sessionPaused && <Pressable onPress={() => setSessionPaused(true)}>
+          {isRunning && <Pressable onPress={() => setIsRunning(false)}>
             <Image
             source={require('@/assets/images/pause.png')}
             style={{
@@ -105,7 +197,7 @@ export default function SoloActivity() {
             resizeMode="contain"
             />
           </Pressable>}
-          {sessionPaused && <Pressable onPress={() => setSessionPaused(false)}>
+          {!isRunning && <Pressable onPress={() => setIsRunning(true)}>
           <Image
             source={require('@/assets/images/play.png')}
             style={{
@@ -169,6 +261,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  petBubblePressable: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
   // DIVIDER
   divider: {
@@ -200,6 +296,15 @@ const styles = StyleSheet.create({
       backgroundColor: 'white',
       borderWidth: 3,
       borderColor: 'black',
+      
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center'
+    },
+    infoText: {
+      fontSize: 22,
+      fontWeight: 'bold',
+      color: 'black',
     },
 
   // BEGIN BUTTON
