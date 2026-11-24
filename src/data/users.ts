@@ -24,14 +24,18 @@ export type Group = {
   name: string;
   description: string;
   memberIds: string[];
+  image?: string;
 };
 
 export type ExerciseLog = {
   logId: string;
+  title: string;
   activity: string;
   date: string;
   durationMinutes: number;
   experienceEarned: number;
+  image?: string;
+  description?: string;
 };
 
 export type User = {
@@ -74,7 +78,7 @@ export const users: User[] = [
   {
     userId: 'user001',
     name: 'Alex',
-    profilePicture: 'https://i.pravatar.cc/150?img=12',
+    profilePicture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNVYZ0w9raJtLDztFeCjzl_mdaJWOXDujV4Nk-ayCA6A&s=10',
     status: 'online',
     experience: 520,
 
@@ -121,23 +125,55 @@ export const users: User[] = [
         name: 'Morning Runners',
         description: 'A group for morning exercise enthusiasts.',
         memberIds: ['user001', 'user002', 'user004'],
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF1RcO_xEtAslXA64PNurjksHnxHiLrN5SIxzAMYsAYA&s=10',
       },
     ],
 
     logs: [
       {
         logId: 'log001',
+        title: 'city run',
         activity: 'Running',
         date: '2026-11-15',
         durationMinutes: 30,
         experienceEarned: 30,
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1Bvij0FnXF1ld_ZAyxrX1jeg7RUYlf01QXVk5GKCGjA&s=10',
+        description: 'chill run',
       },
       {
         logId: 'log002',
+        title: 'other run',
         activity: 'Walking',
         date: '2026-11-14',
         durationMinutes: 20,
         experienceEarned: 15,
+      },
+      {
+        logId: 'log003',
+        title: 'Tennis game',
+        activity: 'Tennis',
+        date: '2026-11-14',
+        durationMinutes: 20,
+        experienceEarned: 15,
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe0M7oWXDYWdxe4of9Bx5HxmyoJIHOIMIeRWJvtzRAsA&s=10'
+      },
+      {
+        logId: 'log004',
+        title: 'PUG',
+        activity: 'Basketball',
+        date: '2026-11-14',
+        durationMinutes: 20,
+        experienceEarned: 15,
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkyYkHl6gIZHxLTsntFuAHXo_vXGAh29Istql-zoLQ5g&s=10'
+      },
+      {
+        logId: 'log005',
+        title: 'Trail run',
+        activity: 'Running',
+        date: '2026-11-14',
+        durationMinutes: 20,
+        experienceEarned: 15,
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTiIk3I1z9l-3dpXihBCQxLM_P27dunsb3uUkUWUNhiA&s=10'
       },
     ],
   },
@@ -173,13 +209,7 @@ export const users: User[] = [
     ],
 
     logs: [
-      {
-        logId: 'log003',
-        activity: 'Cycling',
-        date: '2026-11-16',
-        durationMinutes: 45,
-        experienceEarned: 50,
-      },
+
     ],
   },
 
@@ -208,13 +238,6 @@ export const users: User[] = [
     ],
 
     logs: [
-      {
-        logId: 'log004',
-        activity: 'Walking',
-        date: '2026-11-12',
-        durationMinutes: 25,
-        experienceEarned: 20,
-      },
     ],
   },
 
@@ -242,15 +265,36 @@ export const users: User[] = [
     ],
 
     logs: [
-      {
-        logId: 'log005',
-        activity: 'Running',
-        date: '2026-11-16',
-        durationMinutes: 60,
-        experienceEarned: 70,
-      },
     ],
   },
+  {
+    userId: 'user005',
+    name: 'Jordan',
+    profilePicture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrybwTa7n6x99VLG1OXHmlZ_3cddJb-ZyoGmhyo5c2Fw&s=10',
+    status: 'busy',
+    experience: 1560,
+
+    friends: [
+      { userId: 'user001', since: '2026-02-15' },
+    ],
+    friendRequests: [],
+
+    notifications: [],
+
+    groups: [
+      {
+        groupId: 'group001',
+        name: 'Morning Runners',
+        description: 'A group for morning exercise enthusiasts.',
+        memberIds: ['user001', 'user002', 'user004'],
+      },
+    ],
+
+    logs: [
+
+    ],
+  },
+
 
 ];
 
@@ -282,6 +326,15 @@ export function getUserFriends(userId: string): User[] {
   return user.friends
     .map(friend => getUserById(friend.userId))
     .filter((friend): friend is User => friend !== undefined);
+}
+
+// Get a user's groups
+export function getUserGroups(userId: string): Group[] {
+  const user = getUserById(userId);
+
+  if (!user) return [];
+
+  return user.groups;
 }
 
 export function addExperienceToUser(userId: string, amount: number) {

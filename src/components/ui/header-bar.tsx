@@ -9,8 +9,11 @@ import { Friends } from './friends_popup';
 import { Notif } from './notif_popup';
 
 import { getUserById } from '@/data/users';
+import { useRouter } from 'expo-router';
 
 export function HeaderBar() {
+  const router = useRouter();
+
   const [showNotifs, setShowNotifs] = useState(false);
   const [showFriends, setShowFriends] = useState(false);
 
@@ -31,11 +34,25 @@ export function HeaderBar() {
     setShowFriends(false);
   };
 
+  const handleReturnHome = () => {
+    console.log("HOME")
+    router.replace({
+      pathname: '/(tabs)',
+    });
+  };
+
+  const handleProfile = () => {
+    console.log("PROFILE")
+    router.replace({
+      pathname: '/profile',
+    });
+  };
+
   return (
     <ThemedView style={styles.header}>
 
       {/* LOGO */}
-      <Pressable style={styles.logo}>
+      <Pressable style={styles.logo} onPress={handleReturnHome}>
         <Text>LOGO</Text>
       </Pressable>
 
@@ -94,7 +111,7 @@ export function HeaderBar() {
       )}
 
       {/* PROFILE */}
-      <Pressable style={[styles.itemBox, styles.profileTest]}>
+      <Pressable style={[styles.itemBox, styles.profileTest]} onPress={() => handleProfile()}>
         <Image
           source={require('@/assets/images/profile.png')}
           style={styles.icon}

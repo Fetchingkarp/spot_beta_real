@@ -9,7 +9,9 @@ import {
   View,
 } from 'react-native';
 
-import { getUserById } from '@/data/users';
+import {
+  getUserById
+} from '@/data/users';
 
 type PressProps = {
   setClose: () => void;

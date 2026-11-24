@@ -96,7 +96,7 @@ export default function SoloActivity() {
             onPress={handlePetTap}
             style={styles.petBubblePressable}
           >
-            <PetBubble />
+            <PetBubble animState='exercising'/>
           </Pressable>
         </ThemedView>
 

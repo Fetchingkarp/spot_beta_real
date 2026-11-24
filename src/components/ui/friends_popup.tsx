@@ -229,14 +229,14 @@ const styles = StyleSheet.create({
 
   tabHeader: {
     flex: 0.6,
-    backgroundColor: '#92D80F',
+    backgroundColor: '#BD009B',
     justifyContent: 'flex-end',
     paddingBottom: 10,
     paddingLeft: 10,
   },
 
   selected: {
-    backgroundColor: '#BD009B',
+    backgroundColor: '#92D80F',
   },
 
   tabText: {

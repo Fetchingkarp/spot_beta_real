@@ -18,7 +18,7 @@ import {
   getUserById,
 } from '@/data/users';
 
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { useEffect, useRef, useState } from 'react';
 
 export default function HomeScreen() {
@@ -130,8 +130,7 @@ export default function HomeScreen() {
         {/* PET SECTION */}
         <ThemedView style={styles.heroSection}>
 
-          <PetBubble />
-
+          <PetBubble animState='idle'/>
           {/* LEVEL INDICATOR */}
           <View style={styles.levelSection}>
             <Text style={styles.levelText}>
@@ -192,10 +191,8 @@ const styles = StyleSheet.create({
 
   safeArea: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
     alignItems: 'center',
     gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
     maxWidth: MaxContentWidth,
   },
 
@@ -207,10 +204,9 @@ const styles = StyleSheet.create({
 
   heroSection: {
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     flex: 1,
     width: '100%',
-    paddingHorizontal: Spacing.four,
     gap: Spacing.four,
   },
 

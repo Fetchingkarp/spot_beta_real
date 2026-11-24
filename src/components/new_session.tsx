@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: 'white',
     alignItems: 'center',
-    width: '50%',
+    width: '100%',
     alignSelf: 'flex-end',
   },
   image: {
-    width: 130,
-    height: 130,
+    width: 120,
+    height: 120,
   },
   text: {
     color: 'black',

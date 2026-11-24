@@ -18,6 +18,7 @@ export default function SessionResults() {
 
   const experienceGained = Number(experience) || 0;
   const handleReturnHome = () => {
+    console.log("HOME")
     // Get current experience before updating
     const user = getUserById('user001');
 
@@ -53,7 +54,7 @@ export default function SessionResults() {
         <Text style={{fontSize: 45}}>Session Results</Text>
         {/* Pet */}
         <ThemedView style={styles.petBubbleSection}>
-          <PetBubble />
+          <PetBubble animState='celebrating'/>
         </ThemedView>
 
       </ThemedView>
