@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { Image, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Modal, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { PetBubble } from '@/components/pet-bubble';
 import { ThemedView } from '@/components/themed-view';
@@ -16,6 +16,8 @@ export default function SoloActivity() {
   // Exercise statistics
   const [steps, setSteps] = useState(0);
   const [distance, setDistance] = useState(0);
+
+  const [showStopConfirmation, setShowStopConfirmation] = useState(false);
 
   const router = useRouter();
 
@@ -65,9 +67,17 @@ export default function SoloActivity() {
     setSessionStarted(true);
     setIsRunning(true);
   };
+
   const handleStopSession = () => {
-    console.log("ending session")
-    const experienceGained = (steps / 100) + (distance * 40);
+    setShowStopConfirmation(true);
+  };
+
+  const confirmStopSession = () => {
+    console.log('ending session');
+
+    const experienceGained = Math.max(1, (steps / 100) + (distance * 40));
+
+    setShowStopConfirmation(false);
 
     router.push({
       pathname: '/session_results',
@@ -222,6 +232,54 @@ export default function SoloActivity() {
 
       </View>}
 
+      {/* STOP SESSION CONFIRMATION MODAL */}
+      <Modal
+        visible={showStopConfirmation}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowStopConfirmation(false)}
+      >
+        <View style={styles.modalOverlay}>
+
+          <View style={styles.modalContainer}>
+
+            <Text style={styles.modalTitle}>
+              End Session?
+            </Text>
+
+            <Text style={styles.modalMessage}>
+              Are you sure you want to end your session?
+            </Text>
+
+            <View style={styles.modalButtonSection}>
+
+              {/* CANCEL */}
+              <Pressable
+                style={styles.cancelButton}
+                onPress={() => setShowStopConfirmation(false)}
+              >
+                <Text style={styles.modalButtonText}>
+                  CANCEL
+                </Text>
+              </Pressable>
+
+              {/* CONFIRM */}
+              <Pressable
+                style={styles.confirmButton}
+                onPress={confirmStopSession}
+              >
+                <Text style={styles.modalButtonText}>
+                  END SESSION
+                </Text>
+              </Pressable>
+
+            </View>
+
+          </View>
+
+        </View>
+      </Modal>
+
       {Platform.OS === 'web' && <WebBadge />}
 
     </ThemedView>
@@ -259,7 +317,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   petBubblePressable: {
     justifyContent: 'center',
@@ -344,5 +402,75 @@ const styles = StyleSheet.create({
 
     display: 'flex',
     flexDirection: 'row',
-  }
+  },
+
+  // STOP SESSION MODAL
+
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 25,
+  },
+
+    modalContainer: {
+      width: '100%',
+      backgroundColor: '#FFFFFF',
+      borderWidth: 5,
+      borderColor: 'black',
+      borderRadius: 20,
+      padding: 20,
+      alignItems: 'center',
+    },
+
+      modalTitle: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: 'black',
+        marginBottom: 12,
+      },
+
+      modalMessage: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'black',
+        textAlign: 'center',
+        marginBottom: 25,
+      },
+
+      modalButtonSection: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: 10,
+      },
+
+      cancelButton: {
+        flex: 1,
+        backgroundColor: '#BD009B',
+        borderWidth: 3,
+        borderColor: 'black',
+        borderRadius: 10,
+        paddingVertical: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+
+      confirmButton: {
+        flex: 1,
+        backgroundColor: '#92D80F',
+        borderWidth: 3,
+        borderColor: 'black',
+        borderRadius: 10,
+        paddingVertical: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+
+        modalButtonText: {
+          fontSize: 16,
+          fontWeight: 'bold',
+          color: 'black',
+        },
 });

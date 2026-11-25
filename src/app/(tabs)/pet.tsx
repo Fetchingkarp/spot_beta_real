@@ -54,7 +54,7 @@ export default function PetScreen() {
             <View style={styles.nameRow}>
               <Text style={styles.petName}>[NAME]</Text>
               <Text style={styles.petLevel}>
-                Level x [species]
+                Level x Tae Kwon-Doe
               </Text>
             </View>
 
@@ -102,9 +102,13 @@ export default function PetScreen() {
             <Pressable
               style={styles.customizeButton}
               onPress={openCustomizeModal}
-            >
+            > 
+              <Image
+                source={require('@/assets/images/customise.png')}
+                style={styles.customizeImage}
+              />
               <Text style={styles.customizeText}>
-                ✎ Customize
+                Customize
               </Text>
             </Pressable>
 
@@ -273,7 +277,7 @@ const styles = StyleSheet.create({
   // HEADER
   headerSection: {
     width: '100%',
-    height: '10%',
+    height: '12%',
     justifyContent: 'center',
   },
 
@@ -333,7 +337,7 @@ const styles = StyleSheet.create({
   },
 
   statHeading: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
   },
 
@@ -377,17 +381,21 @@ const styles = StyleSheet.create({
   customizeButton: {
     flex: 2,
     height: '75%',
-    borderWidth: 3,
+    borderWidth: 6,
     borderColor: '#BD009B',
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row'
   },
-
-  customizeText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
+    customizeText: {
+      fontSize: 24,
+      fontWeight: 'bold',
+    },
+    customizeImage: {
+      width: 65,
+      height: 30,
+    },
 
 
   // MODAL OVERLAY

@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
   // LEVEL
   levelSection: {
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
 
   levelText: {
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
   },
 
   experienceText: {
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: '600',
     color: '#555555',
   },

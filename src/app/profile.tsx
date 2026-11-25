@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
   // HEADER
   headerSection: {
     width: '100%',
-    height: '12%',
+    height: '11%',
     alignItems: 'center',
   },
 

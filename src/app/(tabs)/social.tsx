@@ -14,6 +14,48 @@ import { getUserById, Group } from '@/data/users';
 
 import { GroupModal } from '@/components/group-modal';
 
+// Hard-coded activity avatar
+function ActivityAvatar({ color }: { color: string }) {
+  return (
+    <View style={[styles.activityAvatar, { backgroundColor: color }]}>
+      <View style={styles.avatarHead} />
+      <View style={styles.avatarBody} />
+    </View>
+  );
+}
+
+// Hard-coded activity row
+function ActivityRow({
+  name,
+  colors,
+  status,
+}: {
+  name: string;
+  colors: string[];
+  status: string;
+}) {
+  return (
+    <View style={styles.activityRow}>
+      <View style={styles.activityTopRow}>
+        <Text style={styles.activityName}>{name}</Text>
+
+        <View style={styles.activityAvatars}>
+          {colors.map((color, index) => (
+            <ActivityAvatar key={index} color={color} />
+          ))}
+        </View>
+      </View>
+
+      <View style={styles.activityBottomRow}>
+        <Text style={styles.activityStatus}>{status}</Text>
+
+        <Pressable style={styles.joinButton}>
+          <Text style={styles.joinButtonText}>JOIN</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+}
 
 export default function SocialScreen() {
   const [showGroupsTab, setShowGroupsTab] = useState(true);       // Toggle between Groups and Activities
@@ -55,7 +97,6 @@ export default function SocialScreen() {
           </View>
             
           {/**LIST OF GROUPS */}
-                    {/**LIST OF LOGS */}
           {showGroupsTab && <ScrollView 
             style={styles.groupsScrollView}
             contentContainerStyle={styles.groupsContent}>
@@ -107,11 +148,53 @@ export default function SocialScreen() {
 
               ))}
           </ScrollView>}
-          {/**LIST OF ACTIVITIES */}    
-          {!showGroupsTab && <ThemedView> 
-            
-          
-          </ThemedView>}
+          {/** LIST OF ACTIVITIES */}
+          {!showGroupsTab && (
+            <ScrollView
+              style={styles.activitiesScrollView}
+              contentContainerStyle={styles.activitiesContent}
+            >
+
+              {/* PENDING INVITES */}
+              <View style={styles.pendingSection}>
+
+                <Text style={styles.pendingTitle}>
+                  Pending Invites
+                </Text>
+
+                <ActivityRow
+                  name="[NAME]"
+                  colors={['#69D600', '#BD009B', '#00C9C9']}
+                  status="[Waiting to begin]"
+                />
+
+              </View>
+
+              {/* ACTIVE ACTIVITIES */}
+              <View style={styles.activeSection}>
+
+                <ActivityRow
+                  name="[NAME]"
+                  colors={['#69D600', '#D00000', '#D6C000']}
+                  status="Active - XX : XX"
+                />
+
+                <ActivityRow
+                  name="[NAME]"
+                  colors={['#69D600', '#BD009B', '#00C9C9']}
+                  status="Active - XX : XX"
+                />
+
+                <ActivityRow
+                  name="[NAME]"
+                  colors={['#69D600', '#D00000', '#D6C000']}
+                  status="Active - XX : XX"
+                />
+
+              </View>
+
+            </ScrollView>
+          )}
 
           {/* *New Group + Button
           <NewGroup></NewGroup> */}
@@ -214,7 +297,164 @@ const styles = StyleSheet.create({
               flexDirection: 'column',
               justifyContent: 'space-between',
               marginBottom: 10
-            }
+            },
 
+      // ACTIVITIES TAB
 
+      activitiesScrollView: {
+        flex: 6,
+        width: '100%',
+      },
+
+      activitiesContent: {
+        flexGrow: 1,
+        flexDirection: 'column',
+      },
+
+      // PENDING INVITES
+
+      pendingSection: {
+        width: '100%',
+      },
+
+      pendingTitle: {
+        color: '#BD009B',
+        fontSize: 20,
+        fontWeight: 'bold',
+        paddingLeft: 6,
+        paddingVertical: 5,
+        borderBottomWidth: 5,
+        borderBottomColor: 'black',
+      },
+
+      // ACTIVE ACTIVITIES
+
+      activeSection: {
+        width: '100%',
+      },
+
+      activityRow: {
+        width: '100%',
+        minHeight: 85,
+        borderBottomWidth: 5,
+        borderBottomColor: 'black',
+        paddingHorizontal: 12,
+        paddingVertical: 7,
+        justifyContent: 'space-between',
+      },
+
+      activityTopRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      },
+
+      activityName: {
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+
+      activityAvatars: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 14,
+        marginRight: '22%',
+      },
+
+      activityAvatar: {
+        width: 32,
+        height: 32,
+        borderRadius: 20,
+        borderWidth: 2,
+        borderColor: 'black',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+
+      avatarHead: {
+        width: 11,
+        height: 11,
+        borderRadius: 10,
+        borderWidth: 1.5,
+        borderColor: 'black',
+        position: 'absolute',
+        top: 4,
+      },
+
+      avatarBody: {
+        width: 17,
+        height: 11,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        borderWidth: 1.5,
+        borderBottomWidth: 0,
+        borderColor: 'black',
+        position: 'absolute',
+        bottom: 3,
+      },
+
+      activityBottomRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        gap: 12,
+      },
+
+      activityStatus: {
+        fontSize: 19,
+        fontWeight: 'bold',
+      },
+
+      joinButton: {
+        backgroundColor: '#BD009B',
+        borderWidth: 3,
+        borderColor: 'black',
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 2,
+        minWidth: 78,
+        alignItems: 'center',
+      },
+
+      joinButtonText: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: 'black',
+      },
+
+      // NEW SESSION
+
+      newSessionContainer: {
+        width: '100%',
+        alignItems: 'flex-end',
+        paddingRight: 5,
+        paddingTop: 5,
+        paddingBottom: 10,
+      },
+
+      newSessionButton: {
+        width: 90,
+        height: 90,
+        borderRadius: 50,
+        backgroundColor: '#92D80F',
+        borderWidth: 4,
+        borderColor: 'black',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+
+      newSessionPlus: {
+        color: 'white',
+        fontSize: 85,
+        fontWeight: 'bold',
+        lineHeight: 90,
+        textAlign: 'center',
+        includeFontPadding: false,
+      },
+
+      newSessionText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'black',
+      },        
 });

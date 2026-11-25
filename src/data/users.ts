@@ -85,6 +85,8 @@ export const users: User[] = [
     friends: [
       { userId: 'user002', since: '2026-01-10' },
       { userId: 'user003', since: '2026-02-15' },
+      { userId: 'user006', since: '2025-02-15' },
+      { userId: 'user007', since: '2025-02-15' },
     ],
 
     friendRequests: [
@@ -126,6 +128,32 @@ export const users: User[] = [
         description: 'A group for morning exercise enthusiasts.',
         memberIds: ['user001', 'user002', 'user004'],
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF1RcO_xEtAslXA64PNurjksHnxHiLrN5SIxzAMYsAYA&s=10',
+      },
+      {
+        groupId: 'group002',
+        name: 'Tennis.',
+        description: 'A group for morning exercise enthusiasts.',
+        memberIds: ['user001', 'user003', 'user005'],
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe0M7oWXDYWdxe4of9Bx5HxmyoJIHOIMIeRWJvtzRAsA&s=10',
+      },
+      {
+        groupId: 'group003',
+        name: 'Basketball Group',
+        description: 'A group for morning exercise enthusiasts.',
+        memberIds: ['user001', 'user002', 'user003', 'user004', 'user005'],
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4747f7GuqubpW46FSnQSaY-RdECYnRpYTR5p-380leA&s=10',
+      },
+      {
+        groupId: 'group004',
+        name: 'Filler',
+        description: 'A group for morning exercise enthusiasts.',
+        memberIds: ['user001', 'user002', 'user003', 'user004', 'user005'],
+      },
+      {
+        groupId: 'group005',
+        name: 'Filler',
+        description: 'A group for morning exercise enthusiasts.',
+        memberIds: ['user001', 'user002', 'user003', 'user004', 'user005'],
       },
     ],
 
@@ -288,6 +316,51 @@ export const users: User[] = [
         description: 'A group for morning exercise enthusiasts.',
         memberIds: ['user001', 'user002', 'user004'],
       },
+    ],
+
+    logs: [
+
+    ],
+  },
+
+  {
+    userId: 'user006',
+    name: 'Eric',
+    profilePicture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgsUUpN5vDbM7tSgIYXZskK4RGyLt0WRBsWLoHZZvTHw&s=10',
+    status: 'online',
+    experience: 1560,
+
+    friends: [
+      { userId: 'user001', since: '2026-02-15' },
+    ],
+    friendRequests: [],
+
+    notifications: [],
+
+    groups: [
+
+    ],
+
+    logs: [
+
+    ],
+  },
+  {
+    userId: 'user007',
+    name: 'James',
+    profilePicture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcbpzZq0jcXm_c7cLDRjKhLIqS7xeSNcYiP3kBBtFRRA&s',
+    status: 'online',
+    experience: 1560,
+
+    friends: [
+      { userId: 'user001', since: '2024-02-15' },
+    ],
+    friendRequests: [],
+
+    notifications: [],
+
+    groups: [
+
     ],
 
     logs: [

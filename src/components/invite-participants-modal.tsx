@@ -11,22 +11,11 @@ import {
   View,
 } from 'react-native';
 
-type Friend = {
-  userId: string;
-  name: string;
-  profilePicture: string;
-  status?: string;
-};
-
-type Group = {
-  groupId: string;
-  name: string;
-  memberIds: string[];
-};
+import { Group, User } from '@/data/users';
 
 type Props = {
   visible: boolean;
-  friends: Friend[];
+  friends: User[];
   groups: Group[];
   participantIds: string[];
   onClose: () => void;
@@ -114,7 +103,6 @@ export function InviteParticipantsModal({
             <Pressable
               style={[
                 styles.tab,
-                styles.friendsTab,
                 activeTab === 'friends' && styles.activeFriendsTab,
               ]}
               onPress={() => {
@@ -129,7 +117,6 @@ export function InviteParticipantsModal({
             <Pressable
               style={[
                 styles.tab,
-                styles.groupsTab,
                 activeTab === 'groups' && styles.activeGroupsTab,
               ]}
               onPress={() => {
@@ -255,7 +242,8 @@ export function InviteParticipantsModal({
                   >
 
                     <View style={styles.groupIcon}>
-                      <Text style={styles.groupIconText}>G</Text>
+                      <Image source={{uri: group.image ?? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSltdyesaETmIsYYdxPW3gcpIW0LCkUWaTdcCzKII5VMw&s=10'}} 
+                      style={styles.groupIconImage}/>
                     </View>
 
                     <View style={styles.nameSection}>
@@ -348,7 +336,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     fontSize: 28,
     fontWeight: 'bold',
-    borderBottomWidth: 3,
+    borderBottomWidth: 5,
     borderColor: 'black',
   },
 
@@ -361,25 +349,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomWidth: 3,
+    borderBottomWidth: 5,
     borderColor: 'black',
-  },
 
-  friendsTab: {
-    backgroundColor: '#92D80F',
-    borderRightWidth: 3,
-  },
-
-  groupsTab: {
     backgroundColor: '#BD009B',
   },
 
   activeFriendsTab: {
     borderBottomWidth: 0,
+    backgroundColor: '#92D80F',
   },
 
   activeGroupsTab: {
     borderBottomWidth: 0,
+    backgroundColor: '#92D80F',
   },
 
   tabText: {
@@ -491,13 +474,14 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
+    
+    overflow: 'hidden'
   },
 
-  groupIconText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: 'white',
-  },
+    groupIconImage: {
+      height: '100%',
+      width: '100%'
+    },
 
   emptyText: {
     textAlign: 'center',

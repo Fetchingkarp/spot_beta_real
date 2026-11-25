@@ -51,7 +51,7 @@ export default function SessionResults() {
       {/* TOP HALF */}
       <ThemedView style={styles.topSection}>
         {/** Title */}
-        <Text style={{fontSize: 45}}>Session Results</Text>
+        <Text style={{fontSize: 45, marginTop: 30}}>Session Results</Text>
         {/* Pet */}
         <ThemedView style={styles.petBubbleSection}>
           <PetBubble animState='celebrating'/>
@@ -69,6 +69,14 @@ export default function SessionResults() {
 
         {/* Bonus box */}
         <View style={styles.bonusesSection}>
+          <View style={styles.bonusDescription}> 
+            <Image source={require('@/assets/images/bonus_plusses.png')} style={styles.bonusPlusses}/>
+            <Text style={{fontWeight: 'bold', fontSize: 25}}>Bonuses:</Text>
+          </View>
+
+          <View style={styles.bonusesList}>
+            <Image source={require('@/assets/images/award.png')} style={styles.award}/>
+          </View>
         </View>
 
         <View style={styles.experienceSection}>
@@ -167,9 +175,10 @@ const styles = StyleSheet.create({
 
   // INFO BOXES
   bonusesSection: {
+    marginTop: 10,
     flex: 0.7,
     width: '90%',
-    flexDirection: 'row',
+    flexDirection: 'column',
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
     alignContent: 'space-evenly',
@@ -183,7 +192,26 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: 'white'
   },
+    bonusDescription: {
+      flexDirection: 'row', 
+      flex: 1
+    },
+      bonusPlusses: {
+        height: 40,
+        width: 35,
+      },
+      bonusesList: {
+        flexDirection: 'row',
+        flex: 2,
+        justifyContent: 'space-evenly',
+        alignItems: 'center'
+      },
+      award: {
+        height: 70, 
+        width: 80,
+      },
   experienceSection: {
+    marginTop: 10,
     backgroundColor: 'white',
     borderColor: 'black',
     borderStyle: 'solid',

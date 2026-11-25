@@ -51,9 +51,9 @@ export function Friends({ setClose }: PressProps) {
       <Pressable style={styles.overlay} onPress={setClose}>
 
         {/* MODAL CONTENT */}
-        <Pressable
+       <View
           style={styles.modalContent}
-          onPress={(e) => e.stopPropagation()}
+          onStartShouldSetResponder={() => true}
         >
 
           {/* MAIN CONTENT: 1:1:5 FLEX RATIO */}
@@ -92,7 +92,11 @@ export function Friends({ setClose }: PressProps) {
             {/* SECTION 3: FRIENDS LIST / REQUESTS*/}
             {showFriends && (
               <ScrollView
+                style={styles.listContainer}
                 contentContainerStyle={styles.listContent}
+                showsVerticalScrollIndicator={true}
+                nestedScrollEnabled={true}
+                scrollEnabled={true}
               >
 
                 {friends.map((friend) => (
@@ -168,7 +172,7 @@ export function Friends({ setClose }: PressProps) {
             </Text>
           </Pressable>
 
-        </Pressable>
+        </View>
 
       </Pressable>
 
@@ -198,18 +202,21 @@ const styles = StyleSheet.create({
 
     borderColor: 'black',
     borderWidth: 6,
+
+    overflow: 'hidden',
   },
 
   // MAIN CONTENT
   mainContent: {
     flex: 1,
     flexDirection: 'column',
-    display: 'flex',
+    minHeight: 0,
   },
-
   // TITLE
   text_header: {
-    flex: 1,
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
     justifyContent: 'center',
     borderBottomColor: 'black',
     borderBottomWidth: 6,
@@ -223,9 +230,12 @@ const styles = StyleSheet.create({
 
   // TABS
   tabHeaderContainer: {
-    flex: 0.8,
+    flexGrow: 0.8,
+    flexShrink: 1,
+    flexBasis: 0,
     flexDirection: 'row',
   },
+
 
   tabHeader: {
     flex: 0.6,
@@ -247,10 +257,11 @@ const styles = StyleSheet.create({
 
   // FRIENDS LIST
   listContainer: {
-    flex: 8,
+    flexGrow: 5,
+    flexShrink: 1,
+    flexBasis: 0,
     backgroundColor: 'white',
   },
-
   listContent: {
     flexGrow: 1,
   },
@@ -259,7 +270,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
-    minHeight: 90,
+    minHeight: 80,
 
     borderBottomColor: 'black',
     borderBottomWidth: 2,

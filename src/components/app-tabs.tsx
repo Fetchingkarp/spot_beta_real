@@ -1,14 +1,16 @@
 
 import { Tabs } from 'expo-router';
 import { Image } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function AppTabs() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
 
-        // Always show tab names
         tabBarShowLabel: true,
 
         // Colours
@@ -17,26 +19,39 @@ export default function AppTabs() {
         tabBarActiveBackgroundColor: '#92D80F',
         tabBarInactiveBackgroundColor: '#FFFFFF',
 
-        // Tab bar appearance
+        // Footer appearance
         tabBarStyle: {
           backgroundColor: '#FFFFFF',
-          height: 85,
-          paddingTop: 8,
-          paddingBottom: 8,
+
+          // Base height + Android system navigation area
+          height: 85 + insets.bottom,
+
+          // Remove unwanted gap above tab items
+          paddingTop: 0,
+          paddingBottom: Math.max(insets.bottom, 5),
+
           borderTopWidth: 7,
           borderTopColor: '#000000',
         },
+
         // Label appearance
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: 18,
+          marginTop: 16,
           fontWeight: '600',
           color: '#000000',
+          marginBottom: 0,
         },
 
         // Icon positioning
         tabBarIconStyle: {
           marginTop: 0,
           marginBottom: 0,
+        },
+
+        tabBarItemStyle: {
+          paddingTop: 0,
+          paddingBottom: 0,
         },
       }}
     >
@@ -51,11 +66,7 @@ export default function AppTabs() {
           tabBarIcon: () => (
             <Image
               source={require('@/assets/images/tabIcons/home_icon.png')}
-              style={{
-                width: 60,
-                height: 60,
-                marginTop: 50,
-              }}
+              style={{ width: 50, height: 50, marginTop: 15 }}
               resizeMode="contain"
             />
           ),
@@ -73,11 +84,7 @@ export default function AppTabs() {
           tabBarIcon: () => (
             <Image
               source={require('@/assets/images/tabIcons/logs_page_icon.png')}
-              style={{
-                width: 60,
-                height: 60,
-                marginTop: 30,
-              }}
+              style={{ width: 50, height: 50, marginTop: 15 }}
               resizeMode="contain"
             />
           ),
@@ -95,11 +102,7 @@ export default function AppTabs() {
           tabBarIcon: () => (
             <Image
               source={require('@/assets/images/tabIcons/group.png')}
-              style={{
-                width: 80,
-                height: 80,
-                marginTop: 20,
-              }}
+              style={{ width: 80, height: 80, marginTop: 15 }}
               resizeMode="contain"
             />
           ),
@@ -113,11 +116,7 @@ export default function AppTabs() {
           tabBarIcon: () => (
             <Image
               source={require('@/assets/images/tabIcons/pet_icon.png')}
-              style={{
-                width: 60,
-                height: 60,
-                marginTop: 40,
-              }}
+              style={{ width: 65, height: 65, marginTop: 15 }}
               resizeMode="contain"
             />
           ),
